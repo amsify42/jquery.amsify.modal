@@ -1,25 +1,101 @@
  // Amsify42 Modal 1.0.0
  // http://www.amsify42.com
  (function(AmsifyModal, $, undefined) {
-
-    //Private Property
+    /**
+     * message modal selector
+     * @type {String}
+     */
     var messageModalSelector    = '#default-message-modal'
-
-    var confirmModalSelector    = '#default-confirm-modal'
+    /**
+     * confirm modal selector
+     * @type {String}
+     */
+    var confirmModalSelector    = '#default-confirm-modal';
+    /**
+     * confirm click selector
+     * @type {String}
+     */
     var confirmClickSelector    = '.amsify-modal-confirm';
+    /**
+     * confirm text
+     * @type {String}
+     */
     var confirmText             = 'Are you sure, you want to proceed?';
+    /**
+     * confirm button submitting text
+     * @type {String}
+     */
     var confirmClickText        = 'Submitting...';
-
+    /**
+     * default load modal selector
+     * @type {String}
+     */
     var loadModalSelector       = '#default-load-modal'
+    /**
+     * default load click selector
+     * @type {String}
+     */
     var loadClickSelector       = '.amsify-modal-load';
-
-    var setDefaultConfirm       = true;
-    var setDefaultLoad          = true;
-
+    /**
+     * default type
+     * @type {String}
+     */
     var defaultType             = '';
-    
 
-    //Public Property
+    /**
+     * amsifyMessageModal for message
+     * @param  object config
+     */
+    $.amsifyMessageModal = function(config) {
+      AmsifyModal.setMessageModal(config);
+    };
+
+    /**
+     * amsifyMessageModal for message
+     * @param  {object} config
+     */
+    $.amsifyShowMessage = function(message, type, title) {
+      AmsifyModal.showMessage(message, type, title);
+    };
+
+    /**
+     * amsifyConfirmModal for confirmation
+     * @param  {object} config
+     */
+    $.amsifyConfirmModal = function(config) {
+      AmsifyModal.setConfirmModal(config);
+    };
+
+    /**
+     * amsifyLoadModal for loading content
+     * @param  {object} config
+     */
+    $.amsifyLoadModal = function(config) {
+      AmsifyModal.setLoadModal(config);
+    };
+
+    /**
+     * init the plugin with global settings
+     * @param  {object} config
+     */
+    AmsifyModal.init = function(config) {
+      setConfig(config); 
+      var defaultModal = new AmsifyModal.Modal;
+          defaultModal.set();
+    };
+
+    /**
+     * run the plugin with each instance settings
+     * @param {object} config
+     */
+    AmsifyModal.set = function(config) {
+        var newModal = new AmsifyModal.Modal();
+            newModal.set(config);
+    };
+
+    /**
+     * This is like class which can be instantiated multiple times with each setting rules
+     */
     AmsifyModal.Modal = function() {
         AmsifyModal.Modal.prototype.set = function(config) {
           if(config !== undefined) {
@@ -28,47 +104,41 @@
             AmsifyModal.setLoadModal(config);
           } else {
             AmsifyModal.setMessageModal();
-            if(setDefaultConfirm) {
-              AmsifyModal.setConfirmModal();
-            }
-            if(setDefaultLoad) {
-              AmsifyModal.setLoadModal();
-            }
+            AmsifyModal.setConfirmModal();
+            AmsifyModal.setLoadModal();
           }
           AmsifyHelper.bodyLoaderIEfix('modal');
         };
     };
-   
 
-    //Public Methods
-    AmsifyModal.init = function(config) {
-      setConfig(config); 
-      var defaultModal = new AmsifyModal.Modal;
-          defaultModal.set();
-    };
-
-
-    AmsifyModal.set = function(config) {
-        var newModal = new AmsifyModal.Modal();
-            newModal.set(config);
-    };
-
-
+    /**
+     * set message modal
+     * @param {object} config
+     */
     AmsifyModal.setMessageModal = function(config) {
         setMessage(config);  
     };
 
-
+    /**
+     * set confirm modal
+     * @param {object} config
+     */
     AmsifyModal.setConfirmModal = function(config) {
         setConfirm(config);  
     };
 
-
+    /**
+     * set load modal
+     * @param {object} config
+     */
     AmsifyModal.setLoadModal = function(config) {
         setLoad(config);
     };
 
-
+    /**
+     * set load modal
+     * @param {object} config
+     */
     AmsifyModal.showMessage = function(message, type, title) {
       $('.message-text').html(message);
       if(title !== undefined) {
@@ -85,27 +155,31 @@
 
 
 
+/**
+ * 
+ ************ Message Modal Section ************
+ *
+ **/
 
-/*   Message Modal Section    */
-
+    /**
+     * set message with config
+     * @param {object} config
+     */
     function setMessage(config) {
-
         var modalSelector     = messageModalSelector;
         var type              = defaultType;
-
         if(config !== undefined) {
-            if(config.messageModal !== undefined) {
-              modalSelector = config.messageModal;
-            }
+            if(config.messageModal !== undefined) { modalSelector = config.messageModal; }
         }
-
         setMessageModal(modalSelector, config);
     };
 
-
-
+    /**
+     * set Message Modal
+     * @param {selector} modalSelector
+     * @param {object}   config
+     */
     function setMessageModal(modalSelector, config) {
-
         if(AmsifyHelper.detectIE()) {
           if($(modalSelector).html() === undefined) {
             appendModal(modalSelector, 'message', config);
@@ -113,21 +187,24 @@
         } else if(!$(modalSelector).length) {
           appendModal(modalSelector, 'message', config);
         }
-
     };
 
 
+/**
+ * 
+ ************ Confirm Modal Section ************
+ *
+ **/
 
-
-/*   Confirm Modal Section    */
-
+    /**
+     * set confirm
+     * @param {object} config
+     */
     function setConfirm(config) {
-
         var modalSelector     = confirmModalSelector;
         var confirmSelector   = confirmClickSelector;
         var text              = confirmText;
         var type              = defaultType;
-
         if(config !== undefined) {
             if(config.confirmModal !== undefined) {
               modalSelector = config.confirmModal;
@@ -142,12 +219,18 @@
                 type = config.type;
             }
         }
-
         setConfirmLink(modalSelector, confirmSelector, text, type, config);
         setConfirmActionLink(modalSelector, type, config);
     };
 
-
+     /**
+      * set confirm link
+      * @param {selector} modalSelector
+      * @param {selector} confirmSelector
+      * @param {string}   text
+      * @param {string}   type
+      * @param {object}   config
+      */
     function setConfirmLink(modalSelector, confirmSelector, text, type, config) {
 
         if(AmsifyHelper.detectIE()) {
@@ -158,7 +241,6 @@
           appendModal(modalSelector, 'confirm', config);
         }
         
-
         if(type == 'materialize') {
             $('.modal').modal();
             $(document).on('click', confirmSelector, function(){
@@ -176,13 +258,8 @@
                   }
                 });
           });
-
-        }
-
-        else if(type == 'bootstrap') {
-
+        } else if(type == 'bootstrap') {
             $(document).on('click', confirmSelector, function(){
-
                 setActionButton(this, modalSelector, '.confirm-action-link');
                 $(modalSelector).find('.confirmation-text').text(text);
                 $(modalSelector).modal('show');
@@ -194,24 +271,23 @@
                     $('.progress').addClass('hidden');
                 });
           });
-
-
         }
-
         else {
-
           $(document).on('click', confirmSelector, function(){
               setActionButton(this, modalSelector, '.confirm-action-link');
               $(modalSelector).find('.confirmation-text').text(text);
               AmsifyModal.show(modalSelector);
           });
-
         }
     };
 
-
+    /**
+     * set confirm action link
+     * @param {selector} modalSelector
+     * @param {string}   type
+     * @param {object}   config
+     */
     function setConfirmActionLink(modalSelector, type, config) {
-
         $(document).on('click', modalSelector+' .confirm-action-link', function(e){
             e.preventDefault();
             $('.progress').removeClass('hidden');
@@ -226,19 +302,21 @@
         });
     };
 
+/**
+ * 
+ ************ Load Modal Section ************
+ *
+ **/
 
-
-
-
-/*   Load Modal Section    */
-
+    /**
+     * set load
+     * @param {object} config
+     */
     function setLoad(config) {
-
         var modalSelector     = loadModalSelector;
         var clickSelector     = loadClickSelector;
         var text              = confirmText;
         var type              = defaultType;
-
         if(config !== undefined) {
             if(config.loadModal !== undefined) {
               modalSelector = config.loadModal;
@@ -253,15 +331,19 @@
               type = config.type;
             }
         }
-
         setLoadLink(modalSelector, clickSelector, text, type, config);
         setLoadActionLink(modalSelector, type, config);
     };
 
-
-
+    /**
+     * set load link
+     * @param {selector} modalSelector
+     * @param {selector} clickSelector
+     * @param {string}   text
+     * @param {string}   type
+     * @param {object}   config
+     */
     function setLoadLink(modalSelector, clickSelector, text, type, config) {
-
         if(AmsifyHelper.detectIE()) {
           if($(modalSelector).html() === undefined) {
             appendModal(modalSelector, 'load', config);
@@ -285,64 +367,37 @@
                   $('.modal-body-loader').hide();
                 }
               });
-              $.ajax({
-                    type    : "GET",
-                    url     : AmsifyHelper.getActionURL(targetMethod),
-                    data    : {},
-                    success : function (data) {
-                        $('#default-modal-Label').html(data['title']);
-                        $('.default-modal-content').html(data['html']);
-                        $('.modal-body-loader').hide();
-                        setActionButton(thisClickSelector, modalSelector, '.confirm-action-form');
-                        var msgType = 'black';
-                        if(data['status'] !== undefined) {
-                          if(data['status'] == 'error') {
-                            AmsifyHelper.showFlash(data['message'], 'error');
-                          }
-                        }
-                    },
-                    error       : function(data) {
-                      console.info(data);
-                      AmsifyHelper.showFlash('Something went wrong', 'error');
-                    },
-                    complete    : function() {
-                      AmsifyHelper.callback(config, 'afterLoad', $(thisClickSelector), 'after-load');
-                    }
-             });
+
+              var ajaxConfig = {};
+              ajaxConfig['afterSuccess'] = function(data) {
+                  $('#default-modal-Label').html(data['title']);
+                  $('.default-modal-content').html(data['html']);
+                  $('.modal-body-loader').hide();
+                  setActionButton(thisClickSelector, modalSelector, '.confirm-action-form');
+              };
+              ajaxConfig['complete'] = function(data) {
+                  AmsifyHelper.callback(config, 'afterLoad', $(thisClickSelector), 'after-load');
+              };
+              AmsifyHelper.callAjax(targetMethod, {}, ajaxConfig, 'GET');
           });
-        }
-
-        else if(type == 'bootstrap') {
-
+        } else if(type == 'bootstrap') {
             $(document).on('click', clickSelector, function(){
                 var thisClickSelector = this;
                 var targetMethod      = $(this).data('href');
                 $('.modal-body-loader').show();
                 $(modalSelector).modal('show');
-                $.ajax({
-                  type    : "GET",
-                  url     : AmsifyHelper.getActionURL(targetMethod),
-                  data    : {},
-                  success : function (data) {
+                
+                var ajaxConfig = {};
+                ajaxConfig['afterSuccess'] = function(data) {
                     $('#default-modal-Label').html(data['title']);
                     $('.default-modal-content').html(data['html']);
                     $('.modal-body-loader').hide();
                     setActionButton(thisClickSelector, modalSelector, '.confirm-action-form');
-                    var msgType = 'black';
-                    if(data['status'] !== undefined) {
-                      if(data['status'] == 'error') {
-                        AmsifyHelper.showFlash(data['message'], 'error');
-                      }
-                    }
-                  },
-                  error   : function(data) {
-                    console.info(data);
-                    AmsifyHelper.showFlash('Something went wrong', 'error');
-                  },
-                  complete    : function() {
+                };
+                ajaxConfig['complete'] = function(data) {
                     AmsifyHelper.callback(config, 'afterLoad', $(thisClickSelector), 'after-load');
-                  }
-              });
+                };
+                AmsifyHelper.callAjax(targetMethod, {}, ajaxConfig, 'GET');
             });
 
             $(modalSelector).on('hidden.bs.modal', function(e) {
@@ -350,47 +405,34 @@
               $('.default-modal-content').html('');
               $('.modal-body-loader').hide();
             });    
-    
-
-        }
-
-        else {
-
+        } else {
           $(document).on('click', clickSelector, function(){
               var thisClickSelector = this;
               var targetMethod      = $(this).data('href');
               $('.modal-body-loader').show();
-
-
               AmsifyModal.show(modalSelector);
-              $.ajax({
-                    type    : "GET",
-                    url     : AmsifyHelper.getActionURL(targetMethod),
-                    success : function(data) {
-                        $('#default-modal-Label').html(data['title']);
-                        $('.default-modal-content').html(data['html']);
-                        $('.modal-body-loader').hide();
-                        setActionButton(thisClickSelector, modalSelector, '.confirm-action-form');
-                        var msgType = 'black';
-                        if(data['status'] !== undefined) {
-                          if(data['status'] == 'error') {
-                            AmsifyHelper.showFlash(data['message'], 'error');
-                          }
-                        }
-                    },
-                    error   : function(data) {
-                      console.info(data);
-                      AmsifyHelper.showFlash('Something went wrong', 'error');
-                    },
-                    complete    : function() {
-                      AmsifyHelper.callback(config, 'afterLoad', thisClickSelector, 'after-load');
-                    }
-             });
+              
+              var ajaxConfig = {};
+              ajaxConfig['afterSuccess'] = function(data) {
+                  $('#default-modal-Label').html(data['title']);
+                  $('.default-modal-content').html(data['html']);
+                  $('.modal-body-loader').hide();
+                  setActionButton(thisClickSelector, modalSelector, '.confirm-action-form');
+              };
+              ajaxConfig['complete'] = function(data) {
+                  AmsifyHelper.callback(config, 'afterLoad', $(thisClickSelector), 'after-load');
+              };
+              AmsifyHelper.callAjax(targetMethod, {}, ajaxConfig, 'GET');
           });
         }
     };
 
-
+    /**
+     * [setLoadActionLink description]
+     * @param {[type]} modalSelector [description]
+     * @param {[type]} type          [description]
+     * @param {[type]} config        [description]
+     */
     function setLoadActionLink(modalSelector, type, config) {
       $(document).on('click', modalSelector+' .confirm-action-form', function(e){
           e.preventDefault();
@@ -404,113 +446,94 @@
     };
 
 
+/**
+ * 
+ ************ Other Common Functionalities ************
+ *
+ **/
 
-
-/*   Other Helper Functionalities    */
-
+    /**
+     * set section button
+     * @param {selector} linkSelector
+     * @param {selector} modalSelector
+     * @param {selector} selector
+     */
     function setActionButton(linkSelector, modalSelector, selector) {
-
       if($(linkSelector).attr('data-href')) {
         $(modalSelector).find(selector).attr('data-href',$(linkSelector).attr('data-href'));
       }
-
       if($(linkSelector).attr('data-ajax')) {
         $(modalSelector).find(selector).attr('data-ajax',$(linkSelector).attr('data-ajax'));
-
         if($(linkSelector).attr('data-type')) {
           $(modalSelector).find(selector).attr('data-type',$(linkSelector).attr('data-type'));
         } else {
           $(modalSelector).find(selector).attr('data-type','delete');
         }
-
         if($(linkSelector).attr('data-content')) {
           $(modalSelector).find(selector).attr('data-index',$(linkSelector).closest('div').index());
           $(modalSelector).find(selector).attr('data-content',$(linkSelector).attr('data-content'));
         } else {
           $(modalSelector).find(selector).attr('data-index',$(linkSelector).closest('tr').index());
           $(modalSelector).find(selector).attr('data-content', 'table');
+        }
+        if($(linkSelector).attr('data-ajax-redirect')) {
+          $(modalSelector).find(selector).attr('data-ajax-redirect',$(linkSelector).attr('data-ajax-redirect'));
         }  
       }
-
     };
 
-
-
+    /**
+     * call ajax
+     * @param  {selector} submitSelector
+     * @param  {string}   type
+     * @param  {selector} modal
+     * @param  {object}   config
+     */
     AmsifyModal.callAjax = function(submitSelector, type, modal, config) {
-
         var defaulText    = $(submitSelector).html();
         $(submitSelector).addClass('disabled').prop('disabled', 1).html(confirmClickText);
-
         var rowIndex      = $(submitSelector).attr('data-index');
         var operationType = $(submitSelector).attr('data-type');
         var content       = $(submitSelector).attr('data-content');
-
         var modalSelector = confirmModalSelector;
 
         if(modal == 'load') {
             modalSelector = loadModalSelector;          
         }
-
         if(config !== undefined) {
           if(config.loadModal !== undefined) {
             modalSelector = config.loadModal;
           }
         }
 
-
-        var ajaxFormParams = {
-            type        : "POST",
-            url         : AmsifyHelper.getActionURL($(submitSelector).attr('data-ajax')),
-            data        : AmsifyHelper.getFormData($(submitSelector).parent('form')),
-            processData : false,
-            cache       : false,
-        };
-
-        if(!AmsifyHelper.detectIE()) { ajaxFormParams['contentType'] = false; }
-
-        ajaxFormParams['success'] = function(data) {
-            // Hide model only when result is success
-            if(data['status'] == 'success') {
+        var ajaxAction  = $(submitSelector).attr('data-ajax');
+        var params      = AmsifyHelper.getFormData($(submitSelector).parent('form'), true);
+        var ajaxConfig  = {};
+        console.info(modal, $(submitSelector).data());
+        ajaxConfig['afterSuccess'] = function(data) {
+            if($(submitSelector).attr('data-ajax-redirect')) {
+                window.location = $(submitSelector).attr('data-ajax-redirect');
+            } else {
               // Hide modal
               hideModal(modalSelector, type);
               // Perform operation based on its type  
               AmsifyTable.tableOperation(operationType, content, rowIndex, data['html']);
+              $(submitSelector).removeClass('disabled').prop('disabled', 0).html(defaulText);
             }
-
-            var msgType = 'black';
-            if(data['status'] !== undefined) {
-              if(data['status'] == 'success') {
-                msgType = 'success';
-              } else if(data['status'] == 'info') {
-                msgType = 'info';
-              } else {
-                msgType = 'error';
-              }
-            }
-            
-            AmsifyHelper.showFlash(data['message'], msgType);
-
-            if(data['errors'] !== undefined) {
-              AmsifyHelper.iterateErrors(data['errors']);
-            }
-
+        };
+        ajaxConfig['afterResponseError'] = function(data) {
             $(submitSelector).removeClass('disabled').prop('disabled', 0).html(defaulText);
         };
-
-        ajaxFormParams['error'] = function(data) {
-            console.info(data.responseText);
-            $(submitSelector).removeClass('disabled').prop('disabled', 0).html(defaulText);
-            AmsifyHelper.showFlash('Something went wrong', 'error');
-        };
-
-        $.ajax(ajaxFormParams);
+        
+        AmsifyHelper.callAjax(ajaxAction, params, ajaxConfig);
     };
 
 
-
-
-
-/*   Modal Related Functionalities    */
+    /**
+     * hide modal based on type
+     * @param  {selector} modalSelector
+     * @param  {string}   type
+     */
     function hideModal(modalSelector, type) {
       if(type == 'bootstrap') {
         $(modalSelector).modal('hide');
@@ -521,7 +544,11 @@
       }
     };
 
-
+    /**
+     * show modal based on type
+     * @param  {selector} modalSelector
+     * @param  {string}   type
+     */
     function showModal(modalSelector, type) {
       if(type == 'bootstrap') {
         $(modalSelector).modal('show');
@@ -532,7 +559,12 @@
       }
     };
 
-
+    /**
+     * append modal based on type
+     * @param  {selector} modalSelector
+     * @param  {string}   name
+     * @param  {object}   config
+     */
     function appendModal(modalSelector, name, config) {
         var modal = {};
         if(name == 'confirm') {
@@ -545,18 +577,19 @@
         AmsifyHelper.addHTML(modal);
     };
 
-
-
-
+    /**
+     * create object of message modal structure
+     * @param  {selector} modalSelector
+     * @param  {object}   config
+     * @return {object}
+     */
     function prepareMessageModal(modalSelector, config) {
-
         var type = defaultType;
         if(config !== undefined) {
           if(config.type !== undefined) {
             type = config.type;
           }
         }
-
         if(type == 'bootstrap') {
           return [
                   {'<div/>': { 'id': modalSelector.substring(1), 'class':'modal fade', }, 'prependTo': 'body'},
@@ -569,9 +602,7 @@
                   {'<div/>': { 'class':'modal-footer message-modal-footer'}, 'appendTo': '.message-modal-content'},
                   {'<a/>'  : { 'class':'btn btn-success', 'text':'Close', 'href':"#", 'data-dismiss':'modal'}, 'appendTo': '.message-modal-footer'}
           ];
-        }
-
-        else if(type == 'materialize') {
+        } else if(type == 'materialize') {
           return [
                   {'<div/>': { 'id': modalSelector.substring(1), 'class':'modal', }, 'prependTo': 'body'},
                   {'<div/>': { 'class':'modal-content message-modal-content'}, 'appendTo': modalSelector},
@@ -580,9 +611,7 @@
                   {'<div/>': { 'class':'modal-footer message-modal-footer'}, 'appendTo': modalSelector},
                   {'<a/>'  : { 'class':'modal-action modal-close waves-effect waves-green btn-flat', 'text':'Close', 'href':"#", 'data-dismiss':'modal'}, 'appendTo': '.message-modal-footer'}
           ];
-        }
-
-        else {
+        } else {
           return [
                    {'<div/>': { 'id': modalSelector.substring(1), 'class':'amsify-modal'}, 'prependTo': 'body'},
                    {'<div/>': { 'class':'modal-content message-modal-content'}, 'appendTo': modalSelector},
@@ -595,18 +624,19 @@
         }
     };
 
-
-
-
+    /**
+     * create object of confirm modal structure
+     * @param  {selector} modalSelector
+     * @param  {object}   config
+     * @return {object}
+     */
     function prepareConfirmModal(modalSelector, config) {
-
         var type = defaultType;
         if(config !== undefined) {
           if(config.type !== undefined) {
             type = config.type;
           }
         }
-
         if(type == 'bootstrap') {
           return [
                   {'<div/>': { 'id': modalSelector.substring(1), 'class':'modal fade', }, 'prependTo': 'body'},
@@ -620,9 +650,7 @@
                   {'<a/>'  : { 'class':'btn btn-warning danger confirm-action-link', 'text':'Confirm', 'href':"#"}, 'appendTo': '.confirm-modal-footer'},
                   {'<a/>'  : { 'class':'btn btn-success', 'text':'Cancel', 'href':"#", 'data-dismiss':'modal'}, 'appendTo': '.confirm-modal-footer'}
           ];
-        }
-
-        else if(type == 'materialize') {
+        } else if(type == 'materialize') {
           return [
                   {'<div/>': { 'id': modalSelector.substring(1), 'class':'modal', }, 'prependTo': 'body'},
                   {'<div/>': { 'class':'modal-content confirm-modal-content'}, 'appendTo': modalSelector},
@@ -632,59 +660,7 @@
                   {'<a/>'  : { 'class':'modal-action waves-effect waves-red btn-flat confirm-action-link', 'text':'Confirm', 'href':"#"}, 'appendTo': '.confirm-modal-footer'},
                   {'<a/>'  : { 'class':'modal-action modal-close waves-effect waves-green btn-flat', 'text':'Cancel', 'href':"#", 'data-dismiss':'modal'}, 'appendTo': '.confirm-modal-footer'}
           ];
-        }
-
-        else {
-          return [
-                   {'<div/>': { 'id': modalSelector.substring(1), 'class':'amsify-modal'}, 'prependTo': 'body'},
-                   {'<div/>': { 'class':'modal-content confirm-modal-content'}, 'appendTo': modalSelector},
-                   {'<div/>': { 'class':'modal-header confirm-modal-header', 'text':'Modal Header'}, 'appendTo': '.confirm-modal-content'},
-                   {'<div/>': { 'class':'modal-body confirm-modal-body'}, 'appendTo': '.confirm-modal-content'},
-                   {'<p/>'  : { 'class':'confirmation-text', 'text':'Are you sure?'}, 'appendTo': '.confirm-modal-body'},
-                   {'<div/>': { 'class':'modal-footer confirm-modal-footer'}, 'appendTo': '.confirm-modal-content'},
-                   {'<a/>'  : { 'class':'modal-btn btn-red confirm-action-link', 'text':'Confirm', 'href':"#"}, 'appendTo': '.confirm-modal-footer'},
-                   {'<a/>'  : { 'class':'modal-btn btn-green amsify-modal-close','text':'Cancel', 'href':"#"}, 'appendTo': '.confirm-modal-footer'}
-          ];
-        }
-    };
-
-    function prepareConfirmModal(modalSelector, config) {
-
-        var type = defaultType;
-        if(config !== undefined) {
-          if(config.type !== undefined) {
-            type = config.type;
-          }
-        }
-
-        if(type == 'bootstrap') {
-          return [
-                  {'<div/>': { 'id': modalSelector.substring(1), 'class':'modal fade', }, 'prependTo': 'body'},
-                  {'<div/>': { 'class':'modal-dialog confirm-modal-dialog'}, 'appendTo': modalSelector},
-                  {'<div/>': { 'class':'modal-content confirm-modal-content'}, 'appendTo': '.confirm-modal-dialog'},
-                  {'<div/>': { 'class':'modal-header confirm-modal-header'}, 'appendTo': '.confirm-modal-content'},
-                  {'<button/>': { 'type':'button', 'data-dismiss':'modal', 'aria-hidden':'true', 'class':'close'}, 'appendTo': '.confirm-modal-header'},
-                  {'<h4/>': { 'class':'modal-title confirm-modal-title', 'text':'Confirmation'}, 'appendTo': '.confirm-modal-header'},
-                  {'<div/>': { 'class':'modal-body confirm-modal-body confirmation-text'}, 'appendTo': '.confirm-modal-content'},
-                  {'<div/>': { 'class':'modal-footer confirm-modal-footer'}, 'appendTo': '.confirm-modal-content'},
-                  {'<a/>'  : { 'class':'btn btn-warning danger confirm-action-link', 'text':'Confirm', 'href':"#"}, 'appendTo': '.confirm-modal-footer'},
-                  {'<a/>'  : { 'class':'btn btn-success', 'text':'Cancel', 'href':"#", 'data-dismiss':'modal'}, 'appendTo': '.confirm-modal-footer'}
-          ];
-        }
-
-        else if(type == 'materialize') {
-          return [
-                  {'<div/>': { 'id': modalSelector.substring(1), 'class':'modal', }, 'prependTo': 'body'},
-                  {'<div/>': { 'class':'modal-content confirm-modal-content'}, 'appendTo': modalSelector},
-                  {'<h4/>': { 'class':'modal-title confirm-modal-title', 'text':'Confirmation'}, 'appendTo': '.confirm-modal-content'},
-                  {'<div/>': { 'class':'confirmation-text'}, 'appendTo': '.confirm-modal-content'},
-                  {'<div/>': { 'class':'modal-footer confirm-modal-footer'}, 'appendTo': modalSelector},
-                  {'<a/>'  : { 'class':'modal-action waves-effect waves-red btn-flat confirm-action-link', 'text':'Confirm', 'href':"#"}, 'appendTo': '.confirm-modal-footer'},
-                  {'<a/>'  : { 'class':'modal-action modal-close waves-effect waves-green btn-flat', 'text':'Cancel', 'href':"#", 'data-dismiss':'modal'}, 'appendTo': '.confirm-modal-footer'}
-          ];
-        }
-
-        else {
+        } else {
           return [
                    {'<div/>': { 'id': modalSelector.substring(1), 'class':'amsify-modal'}, 'prependTo': 'body'},
                    {'<div/>': { 'class':'modal-content confirm-modal-content'}, 'appendTo': modalSelector},
@@ -699,16 +675,17 @@
     };
 
 
-
+    /**
+     * create object of load modal structure
+     * @param  {selector} modalSelector
+     * @param  {object}   config
+     * @return {object}
+     */
     function prepareLoadModal(modalSelector, config) {
-
         var type = defaultType;
         if(config !== undefined) {
-          if(config.type !== undefined) {
-            type = config.type;
-          }
+          if(config.type !== undefined) { type = config.type; }
         }
-
         if(type == 'bootstrap') {
           return [
                 {'<div/>': { 'id': modalSelector.substring(1), 'class':'modal fade', }, 'prependTo': 'body'},
@@ -722,9 +699,7 @@
                 {'<div/>': { 'class':'modal-footer load-modal-footer'}, 'appendTo': '.load-modal-content'},
                 {'<a/>'  : { 'class':'btn btn-success', 'text':'Close', 'href':"#", 'data-dismiss':'modal'}, 'appendTo': '.load-modal-footer'},
           ];
-        }
-
-        else if(type == 'materialize') {
+        } else if(type == 'materialize') {
           return [
                     {'<div/>': { 'id': modalSelector.substring(1), 'class':'modal modal-fixed-footer', }, 'prependTo': 'body'},
                     {'<div/>': { 'class':'modal-content load-modal-content'}, 'appendTo': modalSelector},
@@ -734,9 +709,7 @@
                     {'<div/>': { 'class':'modal-footer load-modal-footer'}, 'appendTo': modalSelector},
                     {'<a/>'  : { 'class':'modal-action modal-close waves-effect waves-green btn-flat', 'text':'Close', 'href':"#", 'data-dismiss':'modal'}, 'appendTo': '.load-modal-footer'}
           ];
-        }
-
-        else {
+        } else {
           return [
                  {'<div/>': { 'id': modalSelector.substring(1), 'class':'amsify-modal'}, 'prependTo': 'body'},
                  {'<div/>': { 'class':'modal-content modal-large load-modal-content'}, 'appendTo': modalSelector},
@@ -751,21 +724,33 @@
     };
 
 
-
-
-
-/*   Amsify Modal Functionalities    */
-
+/**
+ * 
+ ************ Amsify Modal Functionalities ************
+ *
+ **/
+    /**
+     * show amsify modal
+     * @param  {selector} modalSelector
+     */
     AmsifyModal.show = function(modalSelector) {
         $(modalSelector).css({'display' : 'block', 'visibility' : 'visible'});
         setAmsifyModal();
     };
 
+    /**
+     * hide amsify modal
+     * @param  {selector} modalSelector
+     */
     AmsifyModal.hide = function(modalSelector) {
         $(modalSelector).css({'display' : 'none', 'visibility' : 'none'});
         setAmsifyModal();
     };
 
+    /**
+     * set amsify modal
+     * @param  {selector} modalSelector
+     */
     function setAmsifyModal() {
        $(document).on('click', '.amsify-modal-close', function(e){
             e.preventDefault();
@@ -774,29 +759,27 @@
         });
     };
 
+/**
+ * 
+ ************ Configuration section ************
+ *
+ **/
+    /**
+     * set the global config based on options passed
+     * @param {object} config
+     */
+    function setConfig(config) {
+      if(config !== undefined) {
+          if(config.hasOwnProperty('type')) {
+            defaultType = config.type;
+          }
+          if(config.hasOwnProperty('confirmSelector')) {
+            confirmClickSelector = config.confirmSelector;
+          }
+          if(config.hasOwnProperty('confirmText')) {
+            confirmText = config.confirmText;
+          }
+      }
+    };
 
-
-
-/*   Setting Configuations    */
-  function setConfig(config) {
-    if(config !== undefined) {
-        if(config.hasOwnProperty('type')) {
-          defaultType = config.type;
-        }
-        if(config.hasOwnProperty('confirmSelector')) {
-          confirmClickSelector = config.confirmSelector;
-        }
-        if(config.hasOwnProperty('confirmText')) {
-          confirmText = config.confirmText;
-        }
-        if(config.hasOwnProperty('confirmModal')) {
-          setDefaultConfirm = config.confirmModal;
-        }
-        if(config.hasOwnProperty('loadModal')) {
-          setDefaultLoad = config.loadModal;
-        }
-    }
-  };
-
-
-}(window.AmsifyModal = window.AmsifyModal || {}, jQuery));   
+}(window.AmsifyModal = window.AmsifyModal || {}, jQuery));
