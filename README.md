@@ -18,8 +18,33 @@ If you are using css frameworks like bootstrap or materialize and want to use th
 ```
 
 2. Confirm Modal
+This method will not directly open modal, instead it will create on click event with default selector .amsify-modal-confirm
+```html
+<a href="#" class="amsify-modal-confirm"></a>
+```
+So which ever element is having this class will fire event to open the modal with default confirmation messagee.
 ```js
   $.amsifyConfirmModal();
+```
+Again if you are using css frameworks bootstrap or materialize, you can pass option like this
+```js
+  $.amsifyConfirmModal({
+    type: 'bootstrap'
+  });
+```
+### or
+```js
+  $.amsifyConfirmModal({
+    type: 'materialize'
+  });
+```
+If you want to use different selector and message, you pass option like this
+```js
+  $.amsifyConfirmModal({
+    type: 'bootstrap',
+    confirmSelector: '.open-confirm',
+    confirmText : 'Different confirmation message'
+  });
 ```
 3. Load Modal
 ```js
