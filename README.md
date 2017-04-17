@@ -134,7 +134,8 @@ After successful form submission, modal will close. If you want to redirect inst
 
 If this click element is associated with table, let say you want to add/update/delete row from table through ajax request based on form action.
 </br>
-You should include **jquery.amsify.table plugin** which is there in my respository with same name and initialize it.
+#### Requires
+**jquery.amsify.table.js** file which is there in my **jquery.amsify.table** repository and initialize it.
 
 ### 1. If you want to add row to html table, your click element can be inside or outside of table.
 ```html
