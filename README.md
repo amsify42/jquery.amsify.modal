@@ -61,6 +61,22 @@ If you want to call ajax onclick modal confirm button, you can add **data-ajax**
 ```
 
 ### 3. Load Modal
+This method will also not directly open modal, instead it will create on click event with default selector .amsify-modal-load
+```html
+<a href="#" class="amsify-modal-load" data-href="http://site.com/open-form"></a>
+```
+So whichever element is having this class will fire event to load the modal with content by calling ajax method from **data-href** attribute.
 ```js
   $.amsifyLoadModal();
+```
+If you are using css frameworks bootstrap or materialize, you can pass option like this
+```js
+  $.amsifyLoadModal({
+    type: 'bootstrap'
+  });
+```
+```js
+  $.amsifyLoadModal({
+    type: 'materialize'
+  });
 ```
