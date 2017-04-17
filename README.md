@@ -33,7 +33,6 @@ Again if you are using css frameworks bootstrap or materialize, you can pass opt
     type: 'bootstrap'
   });
 ```
-### or
 ```js
   $.amsifyConfirmModal({
     type: 'materialize'
@@ -55,12 +54,12 @@ If you want to call ajax onclick modal confirm button, you can add **data-ajax**
 **Note:** whatever technology you are using from backend, data should return array/object with atleast these keys
 
 #### On Success
-```json
- [ status:'success' ]
+```js
+ { status:'success', message: 'Action success' }
 ```
 #### On failure
-```json
- [ status:'error' ]
+```js
+ { status:'error', message: 'Action failure' }
 ```
 
 
