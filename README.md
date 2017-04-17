@@ -50,9 +50,7 @@ If you want to call ajax onclick modal confirm button, you can add **data-ajax**
 ```html
 <a href="#" class="amsify-modal-confirm" data-ajax="http://site.com/call-ajax"></a>
 ```
-
-**Note:** whatever technology you are using from backend, data should return array/object with atleast these keys
-
+**Note:** whatever technology you are using from backend, data should return json array response with atleast these keys
 #### On Success
 ```js
  { status:'success', message: 'Action success' }
@@ -61,7 +59,6 @@ If you want to call ajax onclick modal confirm button, you can add **data-ajax**
 ```js
  { status:'error', message: 'Action failure' }
 ```
-
 
 ### 3. Load Modal
 ```js
