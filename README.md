@@ -47,6 +47,23 @@ If you want to use different selector and message, you pass option like this
     confirmText : 'Different confirmation message'
   });
 ```
+If you want to call ajax onclick modal confirm button, you can add **data-ajax** attribute to element like this
+```html
+<a href="#" class="amsify-modal-confirm" data-ajax="http://site.com/call-ajax"></a>
+```
+
+**Note:** whatever technology you are using from backend, data should return array/object with atleast these keys
+
+#### On Success
+```json
+ [ status:'success' ]
+```
+#### On failure
+```json
+ [ status:'error' ]
+```
+
+
 ### 3. Load Modal
 ```js
   $.amsifyLoadModal();
