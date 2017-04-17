@@ -119,9 +119,7 @@ If the same modal having some form and again ajax to be called on form submissio
   {
     status : 'success',
     title : 'Contact Form',
-    html : '<form>
-            <input type="submit" class="confirm-action-form">
-            </form>'
+    html : '<form><input type="submit" class="confirm-action-form"></form>'
   }
 ```
 After successful form submission, modal will close. If you want to redirect instead of closing modal, you can add one more attribute to the click event like this
