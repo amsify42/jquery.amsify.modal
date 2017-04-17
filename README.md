@@ -89,7 +89,7 @@ If you want to call ajax onclick modal confirm button, you can add **data-ajax**
 ```
 This modal will also not open by calling method, instead it will create on click event with default selector .amsify-modal-load
 ```html
-<a href="#" class="amsify-modal-load" data-href="http://site.com/open-form"></a>
+<a href="#" class="amsify-modal-load" data-href="http://site.com/load-form"></a>
 ```
 So whichever element is having this class will fire event to load the modal with content by calling ajax method from **data-href** attribute.
 **Note:** Json response this ajax request get should send html in array key **html** and **title** if required
@@ -125,8 +125,20 @@ If the same modal having some form and again ajax to be called on form submissio
 After successful form submission, modal will close. If you want to redirect instead of closing modal, you can add one more attribute to the click event like this
 ```html
 <a href="#" class="amsify-modal-load" 
-    data-href="http://site.com/open-form" 
+    data-href="http://site.com/load-form" 
     data-ajax="http://site.com/submit-form"
     data-ajax-redirect="http://site.com/redirect"
 ></a>
 ```
+
+If this click element is associated with table, let say you want to add/edit/delete row from table through ajax request based on form action.
+### 1. If you want to add row to html table, your click element must be inside or outside of table.
+```html
+    <a class="btn btn-warning pull-right amsify-modal-load" 
+    data-type="add" 
+    data-href="http://site.com/load-form" 
+    data-ajax="http://site.com/submit-form">Add Form</a>
+    <table>...</table>
+```
+As you can see we have created element outside the table with three attributes **data-type**, **data-href**, **data-href**.
+data-type attribute is operation type **add**/**update**/**delete**, by default it is **delete**.
