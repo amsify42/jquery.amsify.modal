@@ -92,11 +92,12 @@ This modal will also not open by calling method, instead it will create on click
 <a href="#" class="amsify-modal-load" data-href="http://site.com/open-form"></a>
 ```
 So whichever element is having this class will fire event to load the modal with content by calling ajax method from **data-href** attribute.
-**Note:** Json response this ajax request get should send html in array key **html**
+**Note:** Json response this ajax request get should send html in array key **html** and **title** if required
 ```js
   {
     status : 'success',
-    html : '<h1>Modal Content</h1>'
+    title : 'Contact Form',
+    html : '<form>...</form>'
   }
 ```
 If you are using css frameworks bootstrap or materialize, you can pass option like this
@@ -109,4 +110,25 @@ If you are using css frameworks bootstrap or materialize, you can pass option li
   $.amsifyLoadModal({
     type: 'materialize'
   });
+```
+If the same modal having some form and again ajax to be called on form submission, then form submit button should have this class .confirm-action-form and click event should have this one more attribute
+```html
+<a href="#" class="amsify-modal-load" data-href="http://site.com/open-form" data-ajax="http://site.com/submit-form"></a>
+```
+```js
+  {
+    status : 'success',
+    title : 'Contact Form',
+    html : '<form>
+            <input type="submit" class="confirm-action-form">
+            </form>'
+  }
+```
+After successful form submission, modal will close. If you want to redirect instead of closing modal, you can add one more attribute to the click event like this
+```html
+<a href="#" class="amsify-modal-load" 
+    data-href="http://site.com/open-form" 
+    data-ajax="http://site.com/submit-form"
+    data-ajax-redirect="http://site.com/redirect"
+></a>
 ```
