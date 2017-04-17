@@ -38,7 +38,7 @@ Confirm modal initialization
 ```js
   $.amsifyConfirmModal();
 ```
-This modal will not open by calling method, instead it will create on click event with default selector .amsify-modal-confirm
+This modal will not open by calling method, instead it will create on click event with default selector **.amsify-modal-confirm**
 ```html
 <a href="#" class="amsify-modal-confirm" data-href="http://site.com/redirect"></a>
 ```
@@ -87,12 +87,13 @@ If you want to call ajax onclick modal confirm button, you can add **data-ajax**
 ```js
   $.amsifyLoadModal();
 ```
-This modal will also not open by calling method, instead it will create on click event with default selector .amsify-modal-load
+This modal will also not open by calling method, instead it will create on click event with default selector **.amsify-modal-load**
 ```html
 <a href="#" class="amsify-modal-load" data-href="http://site.com/load-form"></a>
 ```
 So whichever element is having this class will fire event to load the modal with content by calling ajax method from **data-href** attribute.
-**Note:** Json response this ajax request get should send html in array key **html** and **title** if required
+<br/>
+**Note:** The json response we get from this ajax request should send html in array key **html** and **title** if required to show in modal title.
 ```js
   {
     status : 'success',
@@ -111,7 +112,7 @@ If you are using css frameworks bootstrap or materialize, you can pass option li
     type: 'materialize'
   });
 ```
-If the same modal having some form and again ajax to be called on form submission, then form submit button should have this class .confirm-action-form and click event should have this one more attribute
+If the same modal having some form and again ajax to be called on form submission, then form submit button should have this class **.confirm-action-form** and click event should have this one more attribute
 ```html
 <a href="#" class="amsify-modal-load" data-href="http://site.com/open-form" data-ajax="http://site.com/submit-form"></a>
 ```
@@ -131,7 +132,7 @@ After successful form submission, modal will close. If you want to redirect inst
 ></a>
 ```
 
-If this click element is associated with table, let say you want to add/edit/delete row from table through ajax request based on form action.
+If this click element is associated with table, let say you want to add/update/delete row from table through ajax request based on form action.
 </br>
 You should include **jquery.amsify.table plugin** which is there in my respository with same name and initialize it.
 
@@ -143,9 +144,9 @@ You should include **jquery.amsify.table plugin** which is there in my resposito
     data-ajax="http://site.com/submit-form">Add Form</a>
     <table>...</table>
 ```
-As you can see we have created element outside the table with three attributes **data-type**, **data-href**, **data-href**.
+As you can see we have created element outside the table with three attributes **data-type**, **data-href**, **data-ajax**.
 <br/>
-**data-type** attribute must contain operation name **add**/**update**/**delete**, by default it is **delete**.
+**data-type** attribute must contain operation name **add** or **update** or **delete**, by default it is **delete**.
 <br/>
 Now, whatever the response data['html'] will come by calling ajax method will be be added to first row of html.
 
@@ -163,15 +164,15 @@ Now, whatever the response data['html'] will come by calling ajax method will be
         <tr>
             <td>Some Title</td>
             <td>
-            <a class="btn btn-primary amsify-modal-load"
-            data-type="update"
-            data-href="http://site.com/load-form" 
-            data-ajax="http://site.com/submit-form">Edit Form</a>
+                <a class="btn btn-primary amsify-modal-load"
+                data-type="update"
+                data-href="http://site.com/load-form" 
+                data-ajax="http://site.com/submit-form">Edit Form</a>
             </td>
             <td>
-            <a class="btn btn-primary amsify-modal-confirm"
-            data-type="delete" 
-            data-ajax="http://site.com/delete-row">Edit Form</a>
+                <a class="btn btn-primary amsify-modal-confirm"
+                data-type="delete" 
+                data-ajax="http://site.com/delete-row">Edit Form</a>
             </td>
         </tr>
     </tbody>
@@ -181,4 +182,6 @@ Based on json response data, row from table will be updated or deleted.
 <br/>
 If you are updating the row then response data['html'] must be the row content.
 <br/>
-If you are deleting the row no data['html'] is required. **Note:** We are using class .amsify-modal-confirm in delete element as we do not want to load any data.
+If you are deleting the row no data['html'] is required. 
+<br/>
+**Note:** We are using class **.amsify-modal-confirm** in delete element as we do not want to load any data.
