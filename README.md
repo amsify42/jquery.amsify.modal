@@ -53,14 +53,14 @@ If you want to call ajax onclick modal confirm button, you can add **data-ajax**
 ```
 **Note:** whatever technology you are using from backend, data should return **json array response** with atleast these keys
 #### On Success
-```json
+```js
  { 
   status:'success', 
   message: 'Action success'
 }
 ```
 #### On failure
-```json
+```js
  {
   status:'error',
   message: 'Action failure'
@@ -77,7 +77,7 @@ This method will also not directly open modal, instead it will create on click e
 ```
 So whichever element is having this class will fire event to load the modal with content by calling ajax method from **data-href** attribute.
 **Note:** Json response this ajax request get should send html in array key **html**
-```json
+```js
   {
     status : 'success',
     html : '<h1>Modal Content</h1>'
