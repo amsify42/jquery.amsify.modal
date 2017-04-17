@@ -132,7 +132,10 @@ After successful form submission, modal will close. If you want to redirect inst
 ```
 
 If this click element is associated with table, let say you want to add/edit/delete row from table through ajax request based on form action.
-### 1. If you want to add row to html table, your click element must be inside or outside of table.
+</br>
+You should include **jquery.amsify.table plugin** which is there in my respository with same name and initialize it.
+
+### 1. If you want to add row to html table, your click element can be inside or outside of table.
 ```html
     <a class="btn btn-warning pull-right amsify-modal-load" 
     data-type="add" 
@@ -141,4 +144,41 @@ If this click element is associated with table, let say you want to add/edit/del
     <table>...</table>
 ```
 As you can see we have created element outside the table with three attributes **data-type**, **data-href**, **data-href**.
-data-type attribute is operation type **add**/**update**/**delete**, by default it is **delete**.
+<br/>
+**data-type** attribute must contain operation name **add**/**update**/**delete**, by default it is **delete**.
+<br/>
+Now, whatever the response data['html'] will come by calling ajax method will be be added to first row of html.
+
+### 2. If you want to update/delete row of html table, your click element must be inside table row.
+```html
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Some Title</td>
+            <td>
+            <a class="btn btn-primary amsify-modal-load"
+            data-type="update"
+            data-href="http://site.com/load-form" 
+            data-ajax="http://site.com/submit-form">Edit Form</a>
+            </td>
+            <td>
+            <a class="btn btn-primary amsify-modal-confirm"
+            data-type="delete" 
+            data-ajax="http://site.com/delete-row">Edit Form</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+```
+Based on json response data, row from table will be updated or deleted. 
+<br/>
+If you are updating the row then response data['html'] must be the row content.
+<br/>
+If you are deleting the row no data['html'] is required. **Note:** We are using class .amsify-modal-confirm in delete element as we do not want to load any data.
