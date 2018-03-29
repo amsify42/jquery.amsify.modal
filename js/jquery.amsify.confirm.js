@@ -36,6 +36,7 @@
             _init  : function(selector) {
                 this.selector = selector;
                 this.setModal();
+                this.setEvents();
             },
 
             setModal  : function() {
@@ -50,7 +51,6 @@
 
             appendModal         : function() {
               AmsifyHelper.addHTML(this.prepareModal());
-              this.setEvents();
             },
 
             setEvents : function() {
