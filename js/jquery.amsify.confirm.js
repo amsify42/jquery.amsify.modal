@@ -9,19 +9,10 @@
         }, options);
 
         /**
-         * Global variable for this object context
-         */
-        var _self;
-        /**
          * Initialization begins from here
          * @type {Object}
          */
         var AmsifyConfirm = function() {
-            /**
-             * Assigning this context to _self
-             * @type {object}
-             */
-            _self               = this;
             this.selector       = null;
             this.modalSelector  = '#amsify-confirm-modal';
             this.actionClass    = '.confirm-action-link';
@@ -54,6 +45,7 @@
             },
 
             setEvents : function() {
+              var _self = this;
               $(this.selector).click(function(e){
                   e.preventDefault();
                   if(settings.type == 'bootstrap') {

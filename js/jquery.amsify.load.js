@@ -10,19 +10,10 @@
         }, options);
 
         /**
-         * Global variable for this object context
-         */
-        var _self;
-        /**
          * Initialization begins from here
          * @type {Object}
          */
         var AmsifyLoad = function() {
-            /**
-             * Assigning this context to _self
-             * @type {object}
-             */
-            _self               = this;
             this.selector       = null;
             this.modalSelector  = '#amsify-load-modal';
             this.titleClass     = '.load-modal-title';
@@ -56,6 +47,7 @@
             },
 
             setEvents : function() {
+              var _self = this;
               $(this.selector).click(function(e){
                   e.preventDefault();
                   $(_self.modalSelector).find(_self.bodyLoader).show();
