@@ -1,3 +1,7 @@
+/**
+ * Amsify Jquery Message Modal 2.0
+ * http://www.amsify42.com
+ */
 (function($) {
 
     $.fn.amsifyMessage = function(options) {

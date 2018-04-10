@@ -1,3 +1,7 @@
+/**
+ * Amsify Jquery Load Modal 2.0
+ * http://www.amsify42.com
+ */
 (function($) {
 
     $.fn.amsifyLoad = function(options) {
