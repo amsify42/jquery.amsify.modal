@@ -7,27 +7,27 @@
 <title>Jquery Modal - Amsify42</title>
 
 <!-- CDN links -->
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"/>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
 <!-- Amsify Plugin -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <link media="all" type="text/css" rel="stylesheet" href="../../../helper/css/amsify.css">
 <script type="text/javascript" src="../../../helper/js/jquery.amsify.helper.js"></script>
-<script type="text/javascript" src="../../js/jquery.amsify.load.modal.js"></script>
+<script type="text/javascript" src="../../js/jquery.amsify.confirm.modal.js"></script>
 </head>
 <body>
 <header>
 	<div class="container">
-		<h1 class="text-center">Jquery Modal - Load</h1>
+		<h1 class="text-center">Jquery Modal - Confirm</h1>
 	</div>
 </header>
 <div class="container" style="min-height:360px;">
 	<div class="col-md-3"></div>
 	<div class="col-md-6 text-center">
-		<a href="#" class="load btn btn-success" data-ajax="modal/test/action.php">
-			Load Form
+		<a href="confirm.html" class="delete waves-effect waves-light btn" data-ajax="modal/examples/action.php">
+			Click Here
 		</a>
 	</div>
 	<div class="col-md-3"></div>
@@ -38,7 +38,7 @@
 		<pre>
 			<code>
 				AmsifyHelper.setBaseURL('jquery-plugins');
-				$('.load').amsifyLoad();
+				$('.delete').amsifyConfirm({ type: 'materialize'});
 			</code>
 		</pre>
 	</div>
@@ -46,7 +46,7 @@
 <!-- -->
 <script type="text/javascript">
 	AmsifyHelper.setBaseURL('jquery-plugins');
-	$('.load').amsifyLoad();
+	$('.delete').amsifyConfirm({ type: 'materialize'});
 </script>
 </body>
 </html>
