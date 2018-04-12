@@ -3,6 +3,10 @@ Amsify Jquery Modal
 
 This folder having three different plugin files.
 <br/>
+
+## Requires
+1. [AmsifyHelper](https://github.com/amsify42/jquery.amsify.helper)
+
 These 3 types can be passed to all these 3 modal plugins
 ```txt
 1. bootstrap (default)
