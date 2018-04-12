@@ -5,9 +5,9 @@ This folder having three different plugin files.
 <br/>
 These 3 types can be passed to all these 3 modal plugins
 ```txt
-	bootstrap (default)
-	materialize
-	amsify
+1. bootstrap (default)
+2. materialize
+3. amsify
 ```
 Based on type you pass, modal will be prepended to the body of html.
 ```js
@@ -35,7 +35,7 @@ This will show the confirm modal popup on click and redirect to href link when c
 ```js
 	$('.delete').amsifyConfirm();
 ```
-For ajax call after cofirmation, you can set **data-ajax** attribute to element like this
+For ajax call after cofirmation, you can set **data-ajax** attribute to the element like this
 ```html
 	<a href="#" class="delete" data-ajax="http://site.com/delete/1">DELETE</a>
 ```
@@ -48,7 +48,7 @@ This will show modal popup with content in it passed in ajax response of action 
 ```js
 	$('#load').amsifyLoad();
 ```
-Ajax response should return html to load the modal popup
+Ajax response should return html to load in modal popup body
 ```js
 	{
 		status: true,
@@ -60,7 +60,7 @@ Ajax response should return html to load the modal popup
 ```html
 	<a href="#" data-message="My Message" class="message">SHOW</a>
 ```
-This simply show message popup onclick with the message set in **data-message** attribute
+This will simply show message popup onclick, with the message set in **data-message** attribute.
 ```js
 	$('.message').amsifyMessage();
 ```
