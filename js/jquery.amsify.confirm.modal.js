@@ -5,8 +5,10 @@
 (function($) {
 
     $.fn.amsifyConfirm = function(options) {
-
-        // Merging default settings with custom
+        /**
+         * Merging default settings with custom
+         * @type {object}
+         */
         var settings = $.extend({
             type      : 'bootstrap',
             message   : 'Are you sure, you want to proceed?',
@@ -98,9 +100,7 @@
             },
 
             /**
-             * create object of confirm modal structure
-             * @param  {selector} modalSelector
-             * @param  {object}   config
+             * Create object of confirm modal structure
              * @return {object}
              */
             prepareModal : function() {
@@ -147,7 +147,7 @@
          * @return {object}
          */
         return this.each(function() {
-            (new AmsifyConfirm)._init(this, settings);
+            (new AmsifyConfirm)._init(this);
         });
 
     };

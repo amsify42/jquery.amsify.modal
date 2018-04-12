@@ -5,8 +5,10 @@
 (function($) {
 
     $.fn.amsifyLoad = function(options) {
-
-        // Merging default settings with custom
+        /**
+         * Merging default settings with custom
+         * @type {object}
+         */
         var settings = $.extend({
             type      : 'bootstrap',
             title     : 'My Form',
@@ -88,9 +90,7 @@
             },
 
             /**
-             * create object of confirm modal structure
-             * @param  {selector} modalSelector
-             * @param  {object}   config
+             * Create object of load modal structure
              * @return {object}
              */
             prepareModal : function() {
@@ -136,7 +136,7 @@
          * @return {object}
          */
         return this.each(function() {
-            (new AmsifyLoad)._init(this, settings);
+            (new AmsifyLoad)._init(this);
         });
 
     };

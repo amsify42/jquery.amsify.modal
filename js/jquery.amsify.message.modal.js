@@ -5,8 +5,10 @@
 (function($) {
 
     $.fn.amsifyMessage = function(options) {
-
-        // Merging default settings with custom
+        /**
+         * Merging default settings with custom
+         * @type {object}
+         */
         var settings = $.extend({
             type      : 'bootstrap',
             message   : 'Hello World',
@@ -84,9 +86,7 @@
             },
 
             /**
-             * create object of message modal structure
-             * @param  {selector} modalSelector
-             * @param  {object}   config
+             * Create object of message modal structure
              * @return {object}
              */
             prepareModal : function() {
@@ -130,7 +130,7 @@
          * @return {object}
          */
         return this.each(function() {
-            (new AmsifyMessage)._init(this, settings);
+            (new AmsifyMessage)._init(this);
         });
 
     };
