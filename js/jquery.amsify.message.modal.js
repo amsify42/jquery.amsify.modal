@@ -65,13 +65,7 @@
                   } else {
                     $(_self.modalSelector).find(_self.messageClass).html(settings.message);
                   }
-                  if(settings.type == 'bootstrap') {
-                    $(_self.modalSelector).modal('show');
-                  } else if(settings.type == 'materialize') {
-                    $(_self.modalSelector).modal('open');
-                  } else {
-                    $(_self.modalSelector).css({'display' : 'block', 'visibility' : 'visible'});
-                  }
+                  AmsifyHelper.showModal(settings.type, _self.modalSelector);
               });
               if(settings.type == 'materialize') {
                 $(document).ready(function(){
@@ -92,7 +86,7 @@
             prepareModal : function() {
               if(settings.type == 'bootstrap') {
                   return [
-                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal fade', }, 'prependTo': 'body'},
+                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal fade', 'modal-type':settings.type }, 'prependTo': 'body'},
                           {'<div/>': { 'class':'modal-dialog message-modal-dialog'}, 'appendTo': this.modalSelector},
                           {'<div/>': { 'class':'modal-content message-modal-content'}, 'appendTo': '.message-modal-dialog'},
                           {'<div/>': { 'class':'modal-header message-modal-header'}, 'appendTo': '.message-modal-content'},
@@ -104,7 +98,7 @@
                   ];
                 } else if(settings.type == 'materialize') {
                   return [
-                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal', }, 'prependTo': 'body'},
+                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal', 'modal-type':settings.type }, 'prependTo': 'body'},
                           {'<div/>': { 'class':'modal-content message-modal-content'}, 'appendTo': this.modalSelector},
                           {'<h4/>': { 'class':'modal-title '+this.titleClass.substring(1), 'text':'Message'}, 'appendTo': '.message-modal-content'},
                           {'<div/>': { 'class': this.messageClass.substring(1), 'text': settings.message}, 'appendTo': '.message-modal-content'},
@@ -113,7 +107,7 @@
                   ];
                 } else {
                   return [
-                           {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'amsify-modal'}, 'prependTo': 'body'},
+                           {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'amsify-modal', 'modal-type':settings.type}, 'prependTo': 'body'},
                            {'<div/>': { 'class':'modal-content message-modal-content'}, 'appendTo': this.modalSelector},
                            {'<div/>': { 'class':'modal-header message-modal-header '+this.titleClass.substring(1), 'text':'Message'}, 'appendTo': '.message-modal-content'},
                            {'<div/>': { 'class':'modal-body message-modal-body'}, 'appendTo': '.message-modal-content'},

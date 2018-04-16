@@ -12,6 +12,7 @@
         var settings = $.extend({
             type      : 'bootstrap',
             message   : 'Are you sure, you want to proceed?',
+            afterAjax : {},
         }, options);
 
         /**
@@ -23,7 +24,6 @@
             this.modalSelector  = '#amsify-confirm-modal';
             this.actionClass    = '.confirm-action-link';
         };
-
 
         AmsifyConfirm.prototype = {
             /**
@@ -54,13 +54,7 @@
               var _self = this;
               $(this.selector).click(function(e){
                   e.preventDefault();
-                  if(settings.type == 'bootstrap') {
-                    $(_self.modalSelector).modal('show');
-                  } else if(settings.type == 'materialize') {
-                    $(_self.modalSelector).modal('open');
-                  } else {
-                    $(_self.modalSelector).css({'display' : 'block', 'visibility' : 'visible'});
-                  }
+                  AmsifyHelper.showModal(settings.type, _self.modalSelector);
                   if($(this).data('ajax')) {
                     $(_self.modalSelector).find(_self.actionClass).attr('data-ajax', $(this).data('ajax'));
                   } else if($(this).attr('href')) {
@@ -92,6 +86,9 @@
                       } else {
                         $(_self.modalSelector).css({'display' : 'none', 'visibility' : 'none'});
                       }
+                      if(settings.afterAjax !== undefined && typeof settings.afterAjax == "function") {
+                        settings.afterAjax($(_self.selector));
+                      }
                     }
                   };
                   AmsifyHelper.callAjax($(this).data('ajax'), {}, ajaxConfig, 'GET');
@@ -106,7 +103,7 @@
             prepareModal : function() {
                 if(settings.type == 'bootstrap') {
                   return [
-                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal fade', }, 'prependTo': 'body'},
+                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal fade', 'modal-type':settings.type }, 'prependTo': 'body'},
                           {'<div/>': { 'class':'modal-dialog confirm-modal-dialog'}, 'appendTo': this.modalSelector},
                           {'<div/>': { 'class':'modal-content confirm-modal-content'}, 'appendTo': '.confirm-modal-dialog'},
                           {'<div/>': { 'class':'modal-header confirm-modal-header'}, 'appendTo': '.confirm-modal-content'},
@@ -119,7 +116,7 @@
                   ];
                 } else if(settings.type == 'materialize') {
                   return [
-                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal', }, 'prependTo': 'body'},
+                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal', 'modal-type':settings.type }, 'prependTo': 'body'},
                           {'<div/>': { 'class':'modal-content confirm-modal-content'}, 'appendTo': this.modalSelector},
                           {'<h4/>': { 'class':'modal-title confirm-modal-title', 'text':'Confirmation'}, 'appendTo': '.confirm-modal-content'},
                           {'<div/>': { 'class':'confirmation-text', 'text': settings.message}, 'appendTo': '.confirm-modal-content'},
@@ -129,7 +126,7 @@
                   ];
                 } else {
                   return [
-                           {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'amsify-modal'}, 'prependTo': 'body'},
+                           {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'amsify-modal', 'modal-type':settings.type}, 'prependTo': 'body'},
                            {'<div/>': { 'class':'modal-content confirm-modal-content'}, 'appendTo': this.modalSelector},
                            {'<div/>': { 'class':'modal-header confirm-modal-header', 'text':'Modal Header'}, 'appendTo': '.confirm-modal-content'},
                            {'<div/>': { 'class':'modal-body confirm-modal-body'}, 'appendTo': '.confirm-modal-content'},
