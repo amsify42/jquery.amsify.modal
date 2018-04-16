@@ -25,6 +25,7 @@
             this.titleClass     = '.load-modal-title';
             this.bodyClass      = '.load-modal-body';
             this.bodyLoader     = '.modal-body-loader';
+            this.detectClose    = '.load-modal-detect';
         };
 
         AmsifyLoad.prototype = {
@@ -59,13 +60,10 @@
                   $(_self.modalSelector).find(_self.bodyLoader).show();
                   var title = ($(this).data('title'))? $(this).data('title'): settings.title;
                   $(_self.modalSelector).find(_self.titleClass).html(title);
-                  if(settings.type == 'bootstrap') {
-                    $(_self.modalSelector).modal('show');
-                  } else if(settings.type == 'materialize') {
-                    $(_self.modalSelector).modal('open');
-                  } else {
-                    $(_self.modalSelector).css({'display' : 'block', 'visibility' : 'visible'});
-                  }
+                  AmsifyHelper.showModal(settings.type, _self.modalSelector);
+                  var index = $(this).addClass('index-class').index('.index-class');
+                  $(this).attr('modal-load-index', index);
+                  $(_self.modalSelector).attr('ajax-index', index);
                   var action      = ($(this).data('ajax'))? $(this).data('ajax'): settings.action;
                   var ajaxConfig  = {
                     afterSuccess : function(data) {
@@ -84,7 +82,7 @@
               }
               if(settings.type == 'amsify') {
                 $(_self.modalSelector).find('.amsify-modal-close').click(function(e){
-                    $(_self.modalSelector).css({'display' : 'none', 'visibility' : 'none'});
+                    AmsifyHelper.hideModal('amsify', _self.modalSelector);
                 });
               }
             },
@@ -96,7 +94,7 @@
             prepareModal : function() {
               if(settings.type == 'bootstrap') {
                 return [
-                      {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal fade', }, 'prependTo': 'body'},
+                      {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal fade', 'modal-type':settings.type }, 'prependTo': 'body'},
                       {'<div/>': { 'class':'modal-dialog modal-lg load-modal-dialog'}, 'appendTo': this.modalSelector},
                       {'<div/>': { 'class':'modal-content load-modal-content'}, 'appendTo': '.load-modal-dialog'},
                       {'<div/>': { 'class':'modal-header load-modal-header'}, 'appendTo': '.load-modal-content'},
@@ -109,7 +107,7 @@
                 ];
               } else if(settings.type == 'materialize') {
                 return [
-                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal modal-fixed-footer', }, 'prependTo': 'body'},
+                          {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'modal modal-fixed-footer', 'modal-type':settings.type }, 'prependTo': 'body'},
                           {'<div/>': { 'class':'modal-content load-modal-content'}, 'appendTo': this.modalSelector},
                           {'<h4/>':  { 'id': 'default-modal-Label', 'class':'modal-title '+this.titleClass.substring(1), 'text':''}, 'appendTo': '.load-modal-content'},
                           {'<div/>': { 'class':'modal-body-loader fill-background'}, 'appendTo': '.load-modal-content'},
@@ -119,7 +117,7 @@
                 ];
               } else {
                 return [
-                       {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'amsify-modal'}, 'prependTo': 'body'},
+                       {'<div/>': { 'id': this.modalSelector.substring(1), 'class':'amsify-modal', 'modal-type':settings.type}, 'prependTo': 'body'},
                        {'<div/>': { 'class':'modal-content modal-large load-modal-content'}, 'appendTo': this.modalSelector},
                        {'<div/>': { 'id': 'default-modal-Label', 'class':'modal-header load-modal-header '+this.titleClass.substring(1), 'text':'Modal Header'}, 'appendTo': '.load-modal-content'},
                        {'<div/>': { 'class':'modal-body-loader fill-background'}, 'appendTo': '.load-modal-content'},
