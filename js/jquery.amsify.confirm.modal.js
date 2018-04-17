@@ -54,12 +54,16 @@
               var _self = this;
               $(this.selector).click(function(e){
                   e.preventDefault();
+                  var index = Date.now().toString().substr(6);
+                  $(this).attr('modal-confirm-index', index);
                   AmsifyHelper.showModal(settings.type, _self.modalSelector);
                   if($(this).data('ajax')) {
                     $(_self.modalSelector).find(_self.actionClass).attr('data-ajax', $(this).data('ajax'));
                   } else if($(this).attr('href')) {
                     $(_self.modalSelector).find(_self.actionClass).attr('href', $(this).attr('href'));
                   }
+                  $(_self.modalSelector).find(_self.actionClass).attr('ajax-index', index);
+                  _self.setClickEvent('[ajax-index="'+index+'"]');
               });
               if(settings.type == 'materialize') {
                 $(document).ready(function(){
@@ -68,10 +72,15 @@
               }
               if(settings.type == 'amsify') {
                 $(_self.modalSelector).find('.amsify-modal-close').click(function(e){
-                    $(_self.modalSelector).css({'display' : 'none', 'visibility' : 'none'});
+                    AmsifyHelper.hideModal('amsify', _self.modalSelector);
                 });
               }
-              $(this.actionClass).click(function(e){
+            },
+
+            setClickEvent : function(selector) {
+              var _self = this;
+              $(selector).click(function(e){
+                $findModal = $(this).closest(_self.modalSelector);
                 $(this).addClass('disabled').attr('disabled', true).text('Working...');
                 $confirm = $(this);
                 if($(this).data('ajax')) {
@@ -79,15 +88,9 @@
                   var ajaxConfig = {
                     afterSuccess : function() {
                       $confirm.removeClass('disabled').attr('disabled', false).text('Confirm');
-                      if(settings.type == 'bootstrap') {
-                        $(_self.modalSelector).modal('hide');
-                      } else if(settings.type == 'materialize') {
-                        $(_self.modalSelector).modal('close');
-                      } else {
-                        $(_self.modalSelector).css({'display' : 'none', 'visibility' : 'none'});
-                      }
+                      AmsifyHelper.hideModal(settings.type, _self.modalSelector);
                       if(settings.afterAjax !== undefined && typeof settings.afterAjax == "function") {
-                        settings.afterAjax($(_self.selector));
+                        settings.afterAjax($('[modal-confirm-index="'+$confirm.attr('ajax-index')+'"]'));
                       }
                     }
                   };
