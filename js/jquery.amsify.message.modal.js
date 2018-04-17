@@ -74,7 +74,7 @@
               }
               if(settings.type == 'amsify') {
                 $(_self.modalSelector).find('.amsify-modal-close').click(function(e){
-                    $(_self.modalSelector).css({'display' : 'none', 'visibility' : 'none'});
+                    AmsifyHelper.hideModal('amsify', _self.modalSelector);
                 });
               }
             },

@@ -61,7 +61,7 @@
                   var title = ($(this).data('title'))? $(this).data('title'): settings.title;
                   $(_self.modalSelector).find(_self.titleClass).html(title);
                   AmsifyHelper.showModal(settings.type, _self.modalSelector);
-                  var index = $(this).addClass('index-class').index('.index-class');
+                  var index = Date.now().toString().substr(6);
                   $(this).attr('modal-load-index', index);
                   $(_self.modalSelector).attr('ajax-index', index);
                   var action      = ($(this).data('ajax'))? $(this).data('ajax'): settings.action;
